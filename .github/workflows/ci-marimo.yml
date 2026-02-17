@@ -1,0 +1,30 @@
+name: CI (marimo)
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync
+      - name: Lint marimo notebooks
+        run: uv run ruff check notebooks/marimo/
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync
+      - name: Run pytest on marimo notebooks
+        run: uv run pytest notebooks/marimo/ tests/ -v
+
+  execute:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync
+      - name: Execute marimo notebook as script
+        run: uv run python notebooks/marimo/analysis.py

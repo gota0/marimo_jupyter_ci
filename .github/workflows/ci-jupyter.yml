@@ -1,0 +1,30 @@
+name: CI (Jupyter)
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync
+      - name: Lint Jupyter notebooks (requires nbqa wrapper)
+        run: uv run nbqa ruff notebooks/jupyter/
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync
+      - name: Run tests on Jupyter notebooks (requires nbmake plugin)
+        run: uv run pytest --nbmake notebooks/jupyter/ tests/ -v
+
+  execute:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync
+      - name: Execute Jupyter notebook (requires nbconvert)
+        run: uv run jupyter nbconvert --to notebook --execute notebooks/jupyter/analysis.ipynb
