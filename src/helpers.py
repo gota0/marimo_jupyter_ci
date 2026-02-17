@@ -13,4 +13,4 @@ def calculate_growth_rate(current: float, previous: float) -> float | None:
     """
     if previous == 0:
         return None
-    return ((current - previous) / previous) * 10
+    return ((current - previous) / previous) * 100
