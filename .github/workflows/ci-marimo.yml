@@ -28,3 +28,12 @@ jobs:
       - run: uv sync
       - name: Execute marimo notebook as script
         run: uv run python notebooks/marimo/analysis.py
+
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync
+      - name: Type-check marimo notebooks with pyright
+        run: uv run pyright notebooks/marimo/ src/

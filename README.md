@@ -11,6 +11,7 @@ is in how standard CI tools interact with each format.
 | CI Step | marimo (`.py`) | Jupyter (`.ipynb`) |
 |---------|---------------|-------------------|
 | Lint | `uv run ruff check` | `uv run nbqa ruff` (wrapper needed) |
+| Type-check | `uv run pyright` | No clean option (`nbqa pyright` is limited) |
 | Test | `uv run pytest` | `uv run pytest --nbmake` (plugin needed) |
 | Execute | `uv run python notebook.py` | `uv run jupyter nbconvert --execute` (tool needed) |
 | Git diff | Clean, readable Python | JSON noise |
@@ -39,18 +40,21 @@ uv sync
 
 # --- marimo (standard tools, no wrappers) ---
 uv run ruff check notebooks/marimo/
+uv run pyright notebooks/marimo/ src/
 uv run pytest notebooks/marimo/test_analysis.py -v
 uv run python notebooks/marimo/analysis.py
 
 # --- Jupyter (every step needs a wrapper) ---
 uv run nbqa ruff notebooks/jupyter/
+# No clean type-check equivalent. nbqa pyright has limitations:
+uv run nbqa pyright notebooks/jupyter/
 uv run pytest --nbmake notebooks/jupyter/test_analysis.ipynb -v
 uv run jupyter nbconvert --to notebook --execute notebooks/jupyter/analysis.ipynb
 ```
 
 ## GitHub Actions
 
-- [CI (marimo)](.github/workflows/ci-marimo.yml) — ruff + pytest + python, no extra tools
+- [CI (marimo)](.github/workflows/ci-marimo.yml) — ruff + pyright + pytest + python, no extra tools
 - [CI (Jupyter)](.github/workflows/ci-jupyter.yml) — nbqa + nbmake + nbconvert wrappers
 
 ## Key takeaway

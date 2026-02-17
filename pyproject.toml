@@ -22,6 +22,7 @@ dev = [
     "ruff",
     "nbqa",
     "nbmake",
+    "pyright",
 ]
 
 [tool.ruff]
@@ -30,6 +31,15 @@ line-length = 88
 
 [tool.ruff.lint]
 select = ["E", "F", "I"]
+
+[tool.pyright]
+pythonVersion = "3.12"
+pythonPlatform = "Linux"
+typeCheckingMode = "basic"
+include = ["src", "notebooks/marimo"]
+reportReturnType = "warning"
+reportMissingImports = true
+reportMissingTypeStubs = false
 
 [tool.pytest.ini_options]
 pythonpath = ["."]

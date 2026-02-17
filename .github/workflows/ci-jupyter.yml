@@ -28,3 +28,16 @@ jobs:
       - run: uv sync
       - name: Execute Jupyter notebook (requires nbconvert)
         run: uv run jupyter nbconvert --to notebook --execute notebooks/jupyter/analysis.ipynb
+
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync
+      - name: Type-check Jupyter notebooks (no direct support)
+        run: |
+          echo "⚠️ pyright cannot type-check .ipynb files directly."
+          echo "Options: nbqa (limited), manual extraction to .py, or skip entirely."
+          echo "Attempting nbqa pyright (best-effort)..."
+          uv run nbqa pyright notebooks/jupyter/ || echo "⚠️ nbqa + pyright has known limitations with notebook cell scoping"
