@@ -57,6 +57,11 @@ uv run jupyter nbconvert --to notebook --execute notebooks/jupyter/analysis.ipyn
 - [CI (marimo)](.github/workflows/ci-marimo.yml) — ruff + pyright + pytest + python, no extra tools
 - [CI (Jupyter)](.github/workflows/ci-jupyter.yml) — nbqa + nbmake + nbconvert wrappers
 
+## Findings
+
+See [docs/findings.md](docs/findings.md) for detailed observations on git diff noise,
+import workarounds, type-checking gaps, and test granularity differences.
+
 ## Key takeaway
 
 marimo notebooks are plain `.py` files. Every tool in the Python ecosystem works
