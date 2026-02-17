@@ -60,15 +60,13 @@ def _(growth_rates, mo, months, sales):
     rows = "\n".join(f"| {months[i]} | {sales[i]} |" for i in range(len(months)))
 
     mo.md(
-        f"""
-        # Monthly Sales Analysis
+        f"""# Monthly Sales Analysis
 
-        | Month | Sales |
-        |-------|-------|
-        {rows}
+| Month | Sales |
+|-------|-------|
+{rows}
 
-        **Highest growth:** {best_month} ({best_rate:.1f}%)
-        """
+**Highest growth:** {best_month} ({best_rate:.1f}%)"""
     )
     return
 
